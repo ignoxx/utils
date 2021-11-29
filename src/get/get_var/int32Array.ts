@@ -9,7 +9,7 @@ import Long from "long";
  * @param flag
  * @returns {{value: Array, length: Number}}
  */
-export function getVarIntArray (genericDecoder, buf, flag): IGetReturn<GodotArray<GodotInteger | Long>> {
+export function getVarInt32Array (genericDecoder, buf): IGetReturn<GodotArray<GodotInteger | Long>> {
   const nbEntries = buf.readUInt32LE(0)
 
   // start at 4 cause of nbEntries
@@ -24,7 +24,7 @@ export function getVarIntArray (genericDecoder, buf, flag): IGetReturn<GodotArra
   }
 
   for (let index = 0; index < nbEntries; index++) {
-    const decodedValue = getVarInteger(genericDecoder, data.buffer, flag)
+    const decodedValue = getVarInteger(genericDecoder, data.buffer)
     data.array.push(decodedValue.value)
     data.buffer = data.buffer.slice(decodedValue.length)
     data.pos += decodedValue.length
